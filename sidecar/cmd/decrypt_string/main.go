@@ -3,10 +3,11 @@ package main
 import (
 	"encoding/base64"
 	"fmt"
-	"log"
 	"os"
 
+	"github.com/rs/zerolog/log"
 	"github.com/ryanchapman/config-container/sidecar"
+	_ "github.com/ryanchapman/config-container/sidecar/log"
 )
 
 func usage() {
@@ -35,13 +36,13 @@ func main() {
 
 	bytesToDecrypt, err := base64.StdEncoding.DecodeString(strToDecrypt)
 	if err != nil {
-		log.Panicf("could not base64 decode '%s': %+v", strToDecrypt, err)
+		log.Fatal().Msgf("could not base64 decode '%s': %s", strToDecrypt, err)
 	}
 
 	encryptionContext := []byte(nil)
 	plaintext, err := e.Decrypt(bytesToDecrypt, encryptionContext)
 	if err != nil {
-		log.Panicf("could not decrypt: %+v", err)
+		log.Panic().Msgf("could not decrypt: %s", err)
 	}
 	fmt.Printf("%s", plaintext)
 }

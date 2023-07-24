@@ -30,11 +30,11 @@ package sidecar
 import (
 	"bytes"
 	"encoding/base64"
-	"log"
 
 	"github.com/google/tink/go/hybrid"
 	"github.com/google/tink/go/insecurecleartextkeyset"
 	"github.com/google/tink/go/keyset"
+	"github.com/rs/zerolog/log"
 )
 
 type Decryptor struct {
@@ -78,7 +78,7 @@ func (d *Decryptor) Decrypt(ciphertext, encryptionContext []byte) ([]byte, error
 		return nil, err
 	}
 
-	log.Printf("About to try to decrypt using keyset \"%s\" and ciphertext \"%s\"", d.PrivateJSONKeyset, base64.StdEncoding.EncodeToString(ciphertext))
+	log.Debug().Msgf("About to try to decrypt using keyset \"%s\" and ciphertext \"%s\"", d.PrivateJSONKeyset, base64.StdEncoding.EncodeToString(ciphertext))
 	decrypted, err := decPrimitive.Decrypt(ciphertext, encryptionContext)
 	if err != nil {
 		return nil, err

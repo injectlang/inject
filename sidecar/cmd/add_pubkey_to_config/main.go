@@ -1,13 +1,17 @@
 package main
 
+// TODO(rchapman): make this work with HCL
+
 import (
 	"encoding/base64"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"regexp"
+
+	"github.com/rs/zerolog/log"
 	//  "github.com/ryanchapman/config-container/sidecar"
+	_ "github.com/ryanchapman/config-container/sidecar/log"
 )
 
 func usage() {
@@ -60,19 +64,19 @@ func addPubkey(pubkeyName, pathToPublicKeysetJson string) {
 	// pubkeyName must start with an uppercase letter
 	re := regexp.MustCompile(`^[A-Z]`)
 	if !re.MatchString(pubkeyName) {
-		log.Panicf("when adding a public key to config file, name of public key must start with an uppercase letter, got %s", pubkeyName)
+		log.Fatal().Msgf("when adding a public key to config file, name of public key must start with an uppercase letter, got %s", pubkeyName)
 	}
 
 	// pubkeyName must be all uppercase letters and numbers
 	re = regexp.MustCompile(`^[A-Z0-9]+`)
 	if !re.MatchString(pubkeyName) {
-		log.Panicf("when adding a public key to config file, name of public key must be uppercase letters and numbers, got %s", pubkeyName)
+		log.Fatal().Msgf("when adding a public key to config file, name of public key must be uppercase letters and numbers, got %s", pubkeyName)
 	}
 
 	// read in contents of file pathToPublicKeysetJson
 	publicKeysetJson, err := ioutil.ReadFile(pathToPublicKeysetJson)
 	if err != nil {
-		log.Panicf("could not read file %s: %+v", pathToPublicKeysetJson, err)
+		log.Fatal().Msgf("could not read file %s: %+v", pathToPublicKeysetJson, err)
 	}
 
 	// base64 encode contents of file pathToPublicKeysetJson
