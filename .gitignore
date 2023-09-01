@@ -1,0 +1,3 @@
+*.swp
+.dir-locals.el
+*_keyset.json

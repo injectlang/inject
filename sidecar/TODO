@@ -1,8 +1,0 @@
-TODO
-
-2. Add custom_functions to meta in config file.  The way we're going to support grabbing data from
-   other sources is through fork/exec.
-
-   custom_functions:
-     getCfnOutput:
-       exec: "aws --profile   
