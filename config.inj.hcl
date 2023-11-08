@@ -80,7 +80,7 @@ context "dev" {
   exports = {
     #REGION      = "${self.vars.region}"
     DB_USERNAME = "db"
-    DB_PASSWORD = decrypt("dev20230604", "c3VwZXJTZWNyZXRQcm9k")
+    DB_PASSWORD = decrypt("DEV20230604", "c3VwZXJTZWNyZXRQcm9k")
     DB_PORT     = "83306"
   }
 }
@@ -88,7 +88,7 @@ context "dev" {
 context "production" {
   exports = {
     DB_USERNAME = "db"
-    #DB_PASSWORD = decrypt("dev20230604", "c3VwZXJTZWNyZXRQcm9k")
+    #DB_PASSWORD = decrypt("DEV20230604", "c3VwZXJTZWNyZXRQcm9k")
     DB_PORT = "3306"
   }
 }

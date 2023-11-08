@@ -241,7 +241,7 @@ Hello World
 
 # Inject files
 
-Inject files are a written in injectlang, which uses really [Hashicorp Config Language](https://github.com/hashicorp/hcl) (HCL)
+Inject files are a written in injectlang, which really uses [Hashicorp Config Language](https://github.com/hashicorp/hcl) (HCL)
 with some required syntax.  Calling it injectlang makes it easier to communicate that you are talking
 about a specific dialect of HCL.
 

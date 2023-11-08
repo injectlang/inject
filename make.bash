@@ -10,6 +10,7 @@ function build
   go build -o build/decrypt_string ./cmd/decrypt_string
   go build -o build/encrypt_string ./cmd/encrypt_string
   go build -o build/entrypoint ./cmd/entrypoint
+  go build -o build/injector ./cmd/injector
   go build -o build/injectord ./cmd/injectord
   go build -o build/injwalk ./cmd/injwalk
   go build -o build/renderinj ./cmd/renderinj
