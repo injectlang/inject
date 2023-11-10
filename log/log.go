@@ -22,6 +22,7 @@ import (
 
 func init() {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 
 	newLevelStr := os.Getenv("LOG_LEVEL")
 	if newLevelStr != "" {

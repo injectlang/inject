@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 	"syscall"
 
 	"github.com/injectlang/injector"
@@ -88,13 +89,27 @@ func main() {
 	err = os.Remove(configFilePath)
 	if err != nil {
 		log.Warn().Msgf("could not delete config file at %s, err=%v", configFilePath, err)
+	} else {
+		log.Debug().Msgf("deleted config file at %s", configFilePath)
 	}
 
-	// don't pass our env to next process
-	// mainly we don't want the private key env var exposed
+	// copy our env, then delete private key env vars
+	// like PRIVATE_JSON_KEYSET_DEV202305
 	env := os.Environ()
+	// envvar looks like "SHELL=/bin/bash"
+	for i, envvar := range env {
+		if strings.HasPrefix(envvar, "PRIVATE_JSON_KEYSET_") {
+			envvarName, _, found := strings.Cut(envvar, "=")
+			if !found {
+				envvarName = envvar
+			}
+			log.Debug().Msgf("removing var %s from env", envvarName)
+			env = append(env[:i], env[i+1:]...)
+		}
+	}
+
 	err = syscall.Exec(binary, os.Args[1:], env)
 	if err != nil {
-		log.Fatal().Msgf("could not fork/exec %s %s, err=%v", binary, os.Args[1:], err)
+		log.Fatal().Msgf("could not exec %s %s, err=%v", binary, os.Args[1:], err)
 	}
 }
